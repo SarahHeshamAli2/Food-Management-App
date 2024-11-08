@@ -1,0 +1,18 @@
+.auth-container {
+    background-image: url('./assets/images/authbg.jpeg');
+    background-position: center center;
+    background-size: cover;
+}
+
+.auth-overlay {
+    background-image: linear-gradient(45deg,rgba(47, 140, 96, 0.63) , rgba(0, 0, 0, 0.62));
+
+}
+
+.input-bg {
+    background-color: rgba(247, 247, 247, 1);
+}
+
+.input-group>.form-control:focus {
+    z-index: unset;
+}
