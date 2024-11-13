@@ -16,3 +16,159 @@
 .input-group>.form-control:focus {
     z-index: unset;
 }
+
+.side-bar-container .ps-sidebar-container {
+background-color: rgba(31, 38, 62, 1);
+padding: 30px 0;
+height: 1000px;
+
+
+}
+.ps-sidebar-root {
+    border-top-right-radius: 58px;
+    overflow: hidden;
+}
+
+.ps-menuitem-root {
+    color: white !important;
+}
+
+.ps-menuitem-root:not(:first-child):hover .ps-menu-button {
+    background-color: rgba(0, 146, 77, 0.1) !important;
+}
+.ps-menuitem-root:first-child:hover .ps-menu-button{
+background-color: transparent !important;
+}
+.ps-menu-button {
+    transition: all 0.25s;
+}
+.sideBarLogo .ps-menu-icon {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.navbar {
+    background-color: rgba(248, 249, 251, 1);
+}
+.ps-sidebar-root.ps-collapsed .ps-sidebar-container  .ps-menu-icon img{
+  width: 90px !important;
+}
+
+.side {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+
+}
+
+
+.ps-sidebar-root.ps-collapsed .ps-menuitem-root.myLogo {
+    margin: 0 -1.5rem;
+}
+.header-container {
+    background-image: url('./assets//images/svgviewer-output.svg');
+    background-position: center center;
+    background-size: cover;
+    border-radius: 15px;
+    background-color: rgba(0, 146, 71, 1);
+
+}
+
+tbody, td, tfoot, th, thead, tr {
+    border-style: unset !important;
+ }
+
+ .table th {
+    background-color: rgba(226, 229, 235, 1) !important;
+ }
+
+ th {
+    padding: 20px !important;
+    
+ }
+
+ .tableR {
+    padding: 20px !important;
+ }
+
+ .cursorPointer {
+    cursor: pointer;
+ }
+
+ .btn-close {
+    border-radius: 100%;
+    border: 3px solid rgba(204, 0, 0, 1);
+   
+ }
+
+ .modalBtnDanger {
+    background-color: transparent !important;
+    color: rgba(204, 0, 0, 1);
+    border: 1px solid rgba(204, 0, 0, 1);
+    font-weight: 700;
+ }
+
+ .modalBtnDanger:hover {
+    color:  rgb(88, 0, 0);;
+ }
+
+ .loader {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: block;
+    margin:15px auto;
+    position: relative;
+    color: #FFF;
+    box-sizing: border-box;
+    animation: animloader 1s linear infinite alternate;
+  }
+  
+  @keyframes animloader {
+    0% {
+      box-shadow: -38px -12px ,  -14px 0,  14px 0, 38px 0;
+    }
+    33% {
+      box-shadow: -38px 0px, -14px -12px,  14px 0, 38px 0;
+    }
+    66% {
+      box-shadow: -38px 0px , -14px 0, 14px -12px, 38px 0;
+    }
+    100% {
+      box-shadow: -38px 0 , -14px 0, 14px 0 , 38px -12px;
+    }
+  }
+
+  .LoadingBg {
+    background-color: rgba(226, 229, 235, 1);
+  }
+  .icon-btn {
+    border: unset;
+    height: unset;
+    padding: unset;
+  }
+
+  .header-img {
+    position: absolute;
+    left: 0;
+  }
+
+  .recipie-image {
+    width: 4rem;
+    height: 4rem;
+  }
+th:first-child {
+    border-top-left-radius: 15px !important;
+    border-bottom-left-radius: 15px !important;
+
+  }
+   th:last-child {
+    border-top-right-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+ 
+
+  }
+
+  th {
+    padding: 30px 20px !important;
+  }

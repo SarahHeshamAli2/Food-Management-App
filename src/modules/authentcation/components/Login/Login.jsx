@@ -1,14 +1,15 @@
-import axios from 'axios'
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { axiosInstance, USERs_URLs } from '../../../../services/urls';
 
 
-export default function Login() {
+export default function Login({saveLoginData}) {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  
 
   let{
     register,
@@ -18,10 +19,13 @@ export default function Login() {
 
   const onSubmit = (data)=> {
     setLoading(true)
-    axios.post('https://upskilling-egypt.com:3006/api/v1/Users/Login',data).then((resp)=>{console.log(resp)
+    axiosInstance.post(USERs_URLs.USER_LOGIN,data).then((resp)=>{console.log(resp)
       setLoading(false)
       toast.success('welcome back !')
       navigate('/dashboard')
+      localStorage.setItem('token',resp.data.token)
+      saveLoginData()
+
 
     }).catch((error)=>{
       toast.error(error.response.data.message)
@@ -82,7 +86,7 @@ export default function Login() {
 
 <div className="links d-flex justify-content-between my-3">
  <Link className='text-decoration-none text-black' to='/register'>Register Now?</Link>
- <Link className='text-decoration-none text-success' to='/Forgetpassword'>Forgot Password?</Link>
+ <Link className='text-decoration-none text-success' to='/forget-password'>Forgot Password?</Link>
 </div>
 
 <button className='btn btn-success w-100'>{loading ? <i className='fa fa-spin fa-spinner'></i> : 'Login'}</button>

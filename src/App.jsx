@@ -16,8 +16,30 @@ import AuthLayout from './modules/shared/components/AuthLayout/AuthLayout'
 import Dashboard from './modules/dashboard/components/Dashboard/Dashboard'
 import MasterLayout from './modules/shared/components/MasterLayout/MasterLayout'
 import { ToastContainer } from 'react-toastify'
+import ProtectedRoute from './modules/shared/components/ProtectedRoute/ProtectedRoute'
+import { useEffect, useState } from 'react'
+import { jwtDecode } from 'jwt-decode'
 
-function App() {
+function App() { 
+  const [loginData, setLoginData] = useState(null)
+
+
+
+  let saveLoginData = () => {
+
+    let decodedData = jwtDecode(localStorage.getItem('token'))
+    setLoginData(decodedData)
+    console.log(decodedData);
+    
+
+  }
+
+useEffect(()=>{
+
+  if(localStorage.getItem('token')) {
+    saveLoginData()
+  }
+},[])
 
 
   const router = createBrowserRouter([
@@ -25,28 +47,28 @@ function App() {
     {path : '' , element : <AuthLayout/> ,
       errorElement : <NotFound/>,
       children : [ 
-        {path : 'login'  , element : <Login/>},
-        {index:true , element : <Login/>},
+        {path : 'login'  , element : <Login saveLoginData = {saveLoginData}/>},
+        {index:true , element : <Login saveLoginData = {saveLoginData}/>},
         {path : 'register'  , element : <Register/>},
-        {path : 'resetpassword'  , element : <ResetPass/>},
-        {path : 'Forgetpassword'  , element : <ForgetPass/>},
-        {path : 'changePassword'  , element : <ChangePass/>},
+        {path : 'reset-password'  , element : <ResetPass/>},
+        {path : 'Forget-password'  , element : <ForgetPass/>},
+        {path : 'change-password'  , element : <ChangePass/>},
       ]
     },
 
 
 
    {
-    path : 'dashboard' , element : <MasterLayout/> , 
+    path : 'dashboard' , element :  <ProtectedRoute ><MasterLayout loginData ={loginData}/> </ProtectedRoute>, 
     
     errorElement : <NotFound/>,
     children : [
-      {index : true , element: <Dashboard/> },
-       {path : 'categoriesList'  , element : <CategoriesList/>},
-      { path : 'categoriesData'  , element : <CategoryData/>},
-      { path : 'RecipiesList'  , element : <ReciepesList/>},
-       {path : 'ReciepiesData'  , element : <ReciepesData/>},
-      { path : 'UsersList'  , element : <UsersList/>},
+      {index : true , element: <Dashboard loginData ={loginData}/> },
+       {path : 'categories-list'  , element : <CategoriesList/>},
+      { path : 'categories-data'  , element : <CategoryData/>},
+      { path : 'recipies-list'  , element : <ReciepesList/>},
+       {path : 'reciepies-data'  , element : <ReciepesData/>},
+      { path : 'users-list'  , element : <UsersList/>},
     ]
    },
    

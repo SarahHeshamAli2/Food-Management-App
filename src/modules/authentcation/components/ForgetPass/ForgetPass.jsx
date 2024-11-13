@@ -1,29 +1,25 @@
-import axios from 'axios'
-import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { axiosInstance, USERs_URLs } from '../../../../services/urls'
 
 export default function ForgetPass() {
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   
   let{
     register,
-    formState:{errors},
+    formState:{errors,isSubmitting},
     handleSubmit
   }=useForm()
 
   const onSubmit = (data)=> {
-    setLoading(true)
-    axios.post('https://upskilling-egypt.com:3006/api/v1/Users/Reset/Request',data).then((resp)=>{console.log(resp)
-      setLoading(false)
+    axiosInstance.post(USERs_URLs.FORGET_PASSWORD,data).then((resp)=>{console.log(resp)
       toast.success('your request is done , please check your mail!')
-      navigate('/resetpassword')
+      navigate('/reset-password',{state : {data}})
 
     }).catch((error)=>{
       toast.error(error.response.data.message)
-      setLoading(false)
     })
 
   }
@@ -39,7 +35,7 @@ export default function ForgetPass() {
 </div>
     <form onSubmit={handleSubmit(onSubmit)}>
 
-    <div className="input-group my-5">
+    <div className="input-group mt-5 ">
   <span className="input-group-text " id="basic-addon1">
   <i className="fa-solid fa-mobile-screen-button"></i>
   </span>
@@ -47,21 +43,19 @@ export default function ForgetPass() {
   {...register('email',{
     required : 'email cannot be empty',
     pattern : {
-      value : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+      value : /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/,
       message : 'please enter a valid'
     }
   })}
   />
 
 </div>
-{errors.email && <span className='text-danger'>{errors.email.message}</span>}
+{errors.email && <div className='text-danger mt-3'>{errors.email.message}</div>}
 
 
 
-
-
-<button className='btn btn-success w-100 mb-3'>{loading ? <i className='fa fa-spin fa-spinner'></i> : 'Submit'}</button>
-    </form>
+<button className='btn btn-success w-100 my-5' > {isSubmitting ? 'submit ...' : 'submit'} </button>
+   </form>
   </div>
   </div>
 
