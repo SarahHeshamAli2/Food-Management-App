@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {  useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
@@ -8,8 +8,7 @@ import { axiosInstance, USERs_URLs } from '../../../../services/urls';
 
 export default function ResetPass() {
  const location = useLocation()
-const myLocation = location.state.data.email 
-console.log(myLocation);
+const myLocation = location.state 
 
  
   const [loading, setLoading] = useState(false)
@@ -27,9 +26,10 @@ console.log(myLocation);
     formState:{errors},
     watch,
     handleSubmit,
+    trigger
     
   
-  }=useForm()
+  }=useForm({defaultValues : {email : myLocation} , mode:'onChange'})
 
   const onSubmit = (data)=> {
     setLoading(true)
@@ -48,6 +48,12 @@ console.log(myLocation);
     })
 
   }
+  useEffect(()=>{
+    if(watch('confirmPassword')) {
+      trigger('confirmPassword')
+
+    }
+  },[watch('password')])
 
   const toggleHideShowPassword = () => {
     setVisible(!isVisible);
@@ -77,14 +83,8 @@ console.log(myLocation);
   <span className="input-group-text " id="basic-addon1">
   <i className="fa-solid fa-mobile-screen-button"></i>
   </span>
-  <input type="email" className="form-control input-bg" placeholder="Email"  aria-label="email" aria-describedby="basic-addon1"
-  {...register('email',{
-    required : 'email cannot be empty',
-    pattern : {
-      value : /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-      message : 'please enter a valid email'
-    }
-  })}
+  <input disabled type="email" className="form-control input-bg" placeholder="Email"  aria-label="email" aria-describedby="basic-addon1"
+  {...register('email')}
   />
 
 </div>
@@ -126,7 +126,7 @@ console.log(myLocation);
  />
  <button onMouseUp={(e)=>{e.preventDefault()}} onMouseDown={(e)=>{e.preventDefault()}} type='button' onClick={toggleHideShowPassword} className='icon-btn'>
  <i  aria-label="password-toggle"   className={isPasswordShown ?"fa-regular fa-eye-slash position-absolute end-0 top-50 translate-middle confirm" : "fa-solid fa-eye position-absolute end-0 top-50 translate-middle confirm"}></i>
-
+ <span className='sr-only'>{isPasswordShown ? 'hide password' : 'show password'}</span>
  </button>
 </div>
 {errors.password && <span className='text-danger'>{errors.password.message}</span>}
@@ -146,6 +146,7 @@ console.log(myLocation);
  />
  <button onMouseUp={(e)=>{e.preventDefault()}} onMouseDown={(e)=>{e.preventDefault()}} type='button' className='icon-btn'  onClick={toggleHideShowRepassword}>
  <i aria-label="confirm-password-toggle" className={isRePasswordShown ?"fa-regular fa-eye-slash position-absolute end-0 top-50 translate-middle confirm" : "fa-solid fa-eye position-absolute end-0 top-50 translate-middle confirm"}></i>
+ <span className='sr-only'>{isPasswordShown ? 'hide password' : 'show password'}</span>
 
  </button>
 </div>
@@ -153,7 +154,7 @@ console.log(myLocation);
 
 
 
-<button className='btn btn-success w-100 mt-3'>{loading ? <i className='fa fa-spin fa-spinner'></i> : 'Rest Password'}</button>
+<button disabled={loading} className='btn btn-success w-100 mt-3'>{loading ? <i className='fa fa-spin fa-spinner'></i> : 'Rest Password'}</button>
     </form>
   </div>
   

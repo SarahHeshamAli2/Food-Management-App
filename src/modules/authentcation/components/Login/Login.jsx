@@ -9,8 +9,15 @@ import { axiosInstance, USERs_URLs } from '../../../../services/urls';
 export default function Login({saveLoginData}) {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-  
+  const [isVisible, setVisible] = useState(false);
+  const [isPasswordShown, setIsPasswordShown] = useState(false)
 
+  const toggleHideShowPassword = () => {
+    setVisible(!isVisible);
+    
+    setIsPasswordShown(!isPasswordShown)
+    
+  };
   let{
     register,
     formState:{errors},
@@ -74,13 +81,15 @@ export default function Login({saveLoginData}) {
   <span className="input-group-text " id="basic-addon1">
   <i className="fa-solid fa-lock"></i> 
    </span>
- <input id='password' type="password" className="form-control input-bg" placeholder="Password" aria-label="password" aria-describedby="basic-addon1"
+ <input id='password' type={!isVisible ? "password" : "text"} className="form-control input-bg" placeholder="Password" aria-label="password" aria-describedby="basic-addon1"
  {...register('password' , {
   required : 'password cannot be empty'
  })}
  />
- <i onClick={toggleShowPassword} className="fa-solid fa-eye position-absolute end-0 top-50 translate-middle"></i>
-</div>
+ <button onMouseUp={(e)=>{e.preventDefault()}} onMouseDown={(e)=>{e.preventDefault()}} type='button' onClick={toggleHideShowPassword} className='icon-btn'>
+ <i  aria-label="password-toggle"   className={isPasswordShown ?"fa-regular fa-eye-slash position-absolute end-0 top-50 translate-middle confirm" : "fa-solid fa-eye position-absolute end-0 top-50 translate-middle confirm"}></i>
+
+ </button></div>
 {errors.password && <span className='text-danger'>{errors.password.message}</span>}
 
 

@@ -9,8 +9,8 @@ export default function MasterLayout({loginData}) {
   
   return <>
     
-    <div className='d-flex align-items-start'>
-        <div >
+    <div className='d-flex '>
+        <div className='sideContain' >
           <SideBar/>
         </div>
         <div className='w-100 mx-3'>

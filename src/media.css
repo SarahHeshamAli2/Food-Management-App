@@ -1,0 +1,24 @@
+@media only screen and (max-width: 600px) {
+    .headerImg {
+        text-align: center !important;
+        position: static !important;
+    }
+    .caption h1 {
+        font-size: 20px !important;
+    }
+    .headerImg img {
+        width: 200px;
+        height: 200px;
+    }
+    .ps-sidebar-root {
+        width: 150px !important;
+        min-width: 150px !important;
+    }
+    .ps-sidebar-root.ps-collapsed {
+        min-width: 80px !important;
+        width: 80px !important;
+    }
+    .details {
+        display: block !important;
+    }
+  }

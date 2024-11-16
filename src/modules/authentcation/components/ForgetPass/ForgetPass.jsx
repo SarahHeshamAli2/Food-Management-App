@@ -2,23 +2,26 @@ import { useForm } from 'react-hook-form'
 import {  useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { axiosInstance, USERs_URLs } from '../../../../services/urls'
+import { useState } from 'react'
 
 export default function ForgetPass() {
-  // const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   
   let{
     register,
-    formState:{errors,isSubmitting},
+    formState:{errors},
     handleSubmit
   }=useForm()
-
+  const [isLoading, setIsLoading] = useState(false)
   const onSubmit = (data)=> {
+    setIsLoading(true)
     axiosInstance.post(USERs_URLs.FORGET_PASSWORD,data).then((resp)=>{console.log(resp)
       toast.success('your request is done , please check your mail!')
-      navigate('/reset-password',{state : {data}})
-
+      navigate('/reset-password',{state : data.email})
+      setIsLoading(false)
     }).catch((error)=>{
+      setIsLoading(false)
+
       toast.error(error.response.data.message)
     })
 
@@ -54,7 +57,9 @@ export default function ForgetPass() {
 
 
 
-<button className='btn btn-success w-100 my-5' > {isSubmitting ? 'submit ...' : 'submit'} </button>
+<button disabled={isLoading} className='btn btn-success w-100 my-5' > { isLoading?  <i className='fa fa-spin fa-spinner'></i>: "submit"
+
+} </button>
    </form>
   </div>
   </div>

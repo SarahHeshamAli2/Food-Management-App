@@ -4,8 +4,11 @@ import TableDetails from '../../../shared/components/TableDetails/TableDetails'
 import DeleteConfirm from '../../../shared/components/DeleteConfirm/DeleteConfirm'
 import boy from "../../../../assets/images/boy.svg"
 import LoadingScreen from '../../../shared/components/LoadingScreen/LoadingScreen'
-import { privateAxiosInstance, RECIPIE_URLs } from '../../../../services/urls'
+import {  imageBaseURL, privateAxiosInstance, RECIPIE_URLs } from '../../../../services/urls'
 import { toast } from 'react-toastify'
+import nodata from '../../../../assets/images/nodata.png'
+import Nodata from '../../../shared/components/NoData/Nodata'
+import EditToolsDropDown from '../../../shared/components/EditToolsDropDown/EditToolsDropDown'
 
 export default function ReciepesList() {
 
@@ -25,12 +28,15 @@ export default function ReciepesList() {
 
       setShow(false)
       getAllRecipes()
-    }).catch((err)=>{console.log(err);
+    }).catch((err)=>{console.log(err.response.data.message);
       setShow(false)
+      toast.error(err?.response?.data?.message)
     })
       
     }
   const getAllRecipes =()=> {
+    
+    
     privateAxiosInstance.get(RECIPIE_URLs.GET_RECIPIES,{
       params : {pageSize :10 , pageNumber :1}
     }).then((resp)=>{console.log(resp);
@@ -47,8 +53,9 @@ export default function ReciepesList() {
 
 <TableDetails btnDetails={'Add New Item'} details={'You can check all details'} caption={'Recipe Table Details'}/>
 
-<DeleteConfirm DeletedItem={deleteSpecificRecipie} handleClose={handleClose}   show ={show} title={'Delete This Category ?'}/>
-{allRecipies ? <div className="table-container table-responsive">
+<DeleteConfirm DeletedItem={deleteSpecificRecipie} handleClose={handleClose}   show ={show} title={'Delete This Recipe  ?'}/>
+{allRecipies?.length == 0 ? <Nodata/> : <>
+  {allRecipies ? <div className="table-container  table-responsive-sm ">
   <table className="table table-striped">
     <thead >
       <tr className=''>
@@ -64,22 +71,19 @@ export default function ReciepesList() {
     <tbody>
       
     {
-    allRecipies?.map((recipie)=>   <tr key={recipie.id} className='tableR'>
+    allRecipies?.map((recipie)=>   <tr key={recipie?.id} className='tableR'>
    
-    <td>{recipie.name}</td>
-    <td><img src={`https://upskilling-egypt.com:3006/${recipie.imagePath}`} alt={recipie.name} className=' rounded recipie-image' /></td>
-    <td>{recipie.price} EGP</td>
-    <td>{recipie.description.split(' ').slice(0,6).join(' ')}</td>
-    <td>{recipie.tag.name}</td>
-    <td>{recipie.category}</td>
+    <td>{recipie?.name}</td>
+    <td><img src={recipie?.imagePath  ? `${imageBaseURL}${recipie.imagePath}` : nodata}  alt={recipie.name} className=' rounded recipie-image' /></td>
+    <td>{recipie?.price} EGP</td>
+    <td>{recipie?.description?.split(' ').slice(0,6).join(' ')}</td>
+    <td>{recipie.tag?.name}</td>
+    <td>{recipie?.category[0]?.name}</td>
    
     <td>
-  <div className="cursorPointer">
-  <i className="fa-solid fa-trash-can text-danger" onClick={()=>{handleShow(recipie.id)}}></i>
- 
-  <i className="fa-solid fa-pen-to-square mx-2 text-warning"></i>
-  </div>
-  
+
+     <EditToolsDropDown handleShow={handleShow} categoryId={recipie.id} />
+
     </td>
   </tr>)
    }
@@ -88,5 +92,8 @@ export default function ReciepesList() {
     </tbody>
   </table>
   </div> : <LoadingScreen/>}
+</>}
+
+ 
  </>
 }

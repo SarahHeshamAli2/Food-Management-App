@@ -59,11 +59,11 @@ useEffect(()=>{
 
 
    {
-    path : 'dashboard' , element :  <ProtectedRoute ><MasterLayout loginData ={loginData}/> </ProtectedRoute>, 
+    path : '' , element :  <ProtectedRoute ><MasterLayout loginData ={loginData}/> </ProtectedRoute>, 
     
     errorElement : <NotFound/>,
     children : [
-      {index : true , element: <Dashboard loginData ={loginData}/> },
+      {path : 'dashboard', element: <Dashboard loginData ={loginData}/> },
        {path : 'categories-list'  , element : <CategoriesList/>},
       { path : 'categories-data'  , element : <CategoryData/>},
       { path : 'recipies-list'  , element : <ReciepesList/>},
