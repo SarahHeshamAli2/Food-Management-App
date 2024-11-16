@@ -30,6 +30,10 @@ background-color: transparent;
   background-color: rgba(31, 38, 62, 1);
 border-top-right-radius: 58px;
 z-index: 999;
+position: sticky;
+top: 0;
+left: 0;
+align-self: flex-start;
 }
 .ps-sidebar-root {
   border-right-style: unset !important;
