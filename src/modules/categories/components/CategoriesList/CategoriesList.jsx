@@ -9,9 +9,17 @@ import { toast } from 'react-toastify';
 import Nodata from '../../../shared/components/NoData/Nodata';
 
 import EditToolsDropDown from '../../../shared/components/EditToolsDropDown/EditToolsDropDown';
+import useCategories from '../../../CustomHooks/useCategories';
+
+
 
 export default function CategoriesList() {
-  const [categories, setCategories] = useState(null)
+
+  const {categories,trigger} = useCategories()
+  console.log(categories);
+  
+
+  // const [categories, setCategories] = useState(null)
   const [categoryId, setCategoryId] = useState(0)
   const [showAddCategory, setShowAddCategory] = useState(false);
   const [showEditCategory, setShowEditCategory] = useState(false);
@@ -36,15 +44,6 @@ export default function CategoriesList() {
   }
 
 
-let getCategories = ()=>{ 
-  privateAxiosInstance.get(CATEGORY_URLs.HANDLE_CATEGORIES,{
-    params : {pageSize :10 , pageNumber :1}
-  }).then((response)=>{console.log(response);
-      
-    setCategories(response.data.data)
-  }).catch((error)=>{console.log(error)
-  })
-}
 
 let editCategory = (data)=>{
 
@@ -52,7 +51,7 @@ let editCategory = (data)=>{
 
   privateAxiosInstance.put(CATEGORY_URLs.ToGGLE_CATEGORY(categoryId),data).then((resp)=>{console.log(resp)
     toast.success('item edited succussefully')
-    getCategories()
+    trigger()
     setShow(false)
       
   }).catch((err)=>{
@@ -66,9 +65,8 @@ let deleteSpecificCategory = () =>{
   
 privateAxiosInstance.delete(CATEGORY_URLs.ToGGLE_CATEGORY(categoryId)).then((resp)=>{console.log(resp)
   toast.success('item deleted succussefully')
-
-  getCategories()
-  setShow(false)
+  trigger()
+    setShow(false)
 }).catch((err)=>{console.log(err);
   setShow(false)
   toast.error(err?.response?.data?.message || 'something went wrong please try again')
@@ -86,9 +84,7 @@ let addNewCategory = (data)=>{
   })
 }
 
-useEffect(()=>{
-  getCategories()
-},[])
+
 
 
 const [show, setShow] = useState(false);
@@ -106,7 +102,7 @@ function handleShow(id) {
 
 <Header img={boy} title ={'Categories'} smallTitle ={'item'} desc={'You can now add your items that any user can order it from the Application and you can edit'}/>
 {
-  categories ? <div className="categories-wrapper">
+  categories?.data?.data? <div className="categories-wrapper">
 
   <DeleteConfirm DeletedItem={deleteSpecificCategory} show ={show} handleClose={handleClose} title={'Delete This Category ?'}/>
   <TableDetails setShowAddCategory={setShowAddCategory} showAddCategory={showAddCategory} handleShowFunction={handleShowAddCategory}  categoryFunction={addNewCategory}  buttonInfo ={'save'} btnDetails={'Add New Category'} details={'You can check all details'} caption={'Categories Table Details'}/>
@@ -123,7 +119,7 @@ function handleShow(id) {
       </thead>
       <tbody>
      {
-      categories?.map((category)=>   <tr key={category?.id} className='tableR'>
+      categories?.data?.data?.map((category)=>   <tr key={category?.id} className='tableR'>
       <td>{category?.name}</td>
       <td>{category?.creationDate}</td>
      
@@ -151,7 +147,7 @@ function handleShow(id) {
 
 
 {
-    categories?.length == 0 ? <Nodata/> : ''
+      categories?.data?.data?.length == 0 ? <Nodata/> : ''
   }
   </>
 }
