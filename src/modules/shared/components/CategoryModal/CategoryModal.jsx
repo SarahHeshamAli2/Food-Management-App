@@ -40,7 +40,6 @@ const [isEmptyCategory, setIsEmptyCategory]= useState(false)
       useEffect(()=>{
         isEmptyCategory ? trigger('name') : ''
       },[watch('name')])
-  ل
 
 return <>
 <div className="categoryModal">
