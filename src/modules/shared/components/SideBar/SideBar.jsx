@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import logo from '../../../../assets/images/3.svg'
-import {  NavLink } from 'react-router-dom';
+import {  NavLink, useNavigate } from 'react-router-dom';
 
 
-export default function SideBar() {
+export default function SideBar({setLoginData}) {
+  const navigate = useNavigate()
   useEffect(()=>{
     localStorage.getItem('sidebar') ?    setIsCollapsed(JSON.parse(localStorage.getItem('sidebar'))) : setIsCollapsed(false)
 
@@ -17,6 +18,13 @@ export default function SideBar() {
     isCollapsed ? localStorage.setItem('sidebar',false) : localStorage.setItem('sidebar',true)
   }
 
+
+  const logOut = ()=>{
+    localStorage.setItem('userProfileImage',null)
+    localStorage.removeItem('token')
+    setLoginData(null)
+    navigate('/login')
+  }
 return <>
 
 <div className='side-bar-container'>
@@ -32,7 +40,7 @@ return <>
     <MenuItem icon={<i className="fa-solid fa-utensils"></i>} component={<NavLink to='/recipies-list'/>}> Recipes  <span className='sr-only'>navigate to recipies list</span></MenuItem>
     <MenuItem icon = {<i className="fa-solid fa-list"></i>} component={<NavLink to='/categories-list'/>}> Categories <span className='sr-only'>navigate to categories list</span></MenuItem>
     <MenuItem icon={<i className="fa-solid fa-lock"></i>} component={<NavLink to='/change-password'/>}> Change Password <span className='sr-only'>navigate to change password</span> </MenuItem>
-    <MenuItem icon={<i className="fa-solid fa-right-from-bracket"></i>}> Logout <span className='sr-only'>navigate to logout</span></MenuItem>
+    <MenuItem onClick={logOut} icon={<i className="fa-solid fa-right-from-bracket"></i>}> Logout <span className='sr-only'>navigate to logout</span></MenuItem>
     </div>
   </Menu>
 </Sidebar>;

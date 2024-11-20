@@ -27,7 +27,6 @@ const useFetch = (fetchFunction) => {
 }) ()
     },[counter])
 
-console.log(isLoading);
 
     return {
 

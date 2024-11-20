@@ -154,7 +154,7 @@ const myLocation = location.state
 
 
 
-<button disabled={loading} className='btn btn-success w-100 mt-3'>{loading ? <i className='fa fa-spin fa-spinner'></i> : 'Rest Password'}</button>
+<button disabled={loading} className='btn mainBtnColor text-white w-100 mt-3'>{loading ? <i className='fa fa-spin fa-spinner'></i> : 'Rest Password'}</button>
     </form>
   </div>
   

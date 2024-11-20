@@ -1,0 +1,93 @@
+.captionText{
+    color: rgba(73, 73, 73, 0.6);
+    font-weight: 400;
+}
+
+.rightInputs{
+    margin-left: 6rem;
+}
+
+.registerForm input {
+border: unset !important;
+}
+.registerForm i {
+    color: rgba(131, 145, 161, 1)
+}
+
+.input-group-text {
+    background-color: red !important;
+}
+
+.registerForm span{
+    padding-right: unset;
+}
+
+.loginBtn {
+    color: rgba(74, 163, 90, 1);
+    background-color: unset;
+    border: unset;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.registerBtn {
+    width: 34.2rem;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 2.2rem;
+    padding-block: 0.6rem;
+    border-radius: 8px;
+    margin-top: 1.4rem;
+}
+
+.formCaption {
+    margin-bottom: 2.25rem;
+}
+
+.formWrapper {
+    padding-inline: 3.8rem;
+
+       & input {
+        padding-block: 0.75rem;
+        border-radius: 8px !important;
+
+        }
+
+    & ::placeholder {
+        padding-inline: 8px;
+        border-left: 1px solid rgba(131, 145, 161, 1);
+
+    }
+}
+
+.inputGroup {
+
+    margin-bottom: 1.3rem;
+}
+
+.errorMessage {
+    margin-bottom: 1rem;
+}
+
+.formImage {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 8px;
+}
+
+.registerImage {
+    display: none;
+
+}
+
+
+.fileUpload{
+    display: none;
+
+  }
+  .customFileUpload {
+
+    cursor: pointer;
+  }

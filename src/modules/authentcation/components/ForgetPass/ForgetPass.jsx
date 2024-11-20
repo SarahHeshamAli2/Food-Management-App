@@ -57,7 +57,7 @@ export default function ForgetPass() {
 
 
 
-<button disabled={isLoading} className='btn btn-success w-100 my-5' > { isLoading?  <i className='fa fa-spin fa-spinner'></i>: "submit"
+<button disabled={isLoading} className='btn mainBtnColor text-white w-100 my-5' > { isLoading?  <i className='fa fa-spin fa-spinner'></i>: "submit"
 
 } </button>
    </form>

@@ -17,6 +17,7 @@ export default function CategoriesList() {
 
   const {categories,trigger} = useCategories()
   console.log(categories);
+
   
 
   // const [categories, setCategories] = useState(null)
@@ -24,6 +25,7 @@ export default function CategoriesList() {
   const [showAddCategory, setShowAddCategory] = useState(false);
   const [showEditCategory, setShowEditCategory] = useState(false);
   const [categoryName, setCategoryName] = useState('');
+  const [timeFormat, setTimeFormat] = useState('');
   
 
   
@@ -77,7 +79,7 @@ privateAxiosInstance.delete(CATEGORY_URLs.ToGGLE_CATEGORY(categoryId)).then((res
 
 let addNewCategory = (data)=>{
   privateAxiosInstance.post(CATEGORY_URLs.HANDLE_CATEGORIES,data).then((response)=>{console.log(response);
-      getCategories()
+    trigger()
       toast.success('category added successfully')
   }).catch((error)=>{console.log(error)
     toast.error(error?.response?.data?.message || 'something went wrong please try again')
@@ -121,7 +123,10 @@ function handleShow(id) {
      {
       categories?.data?.data?.map((category)=>   <tr key={category?.id} className='tableR'>
       <td>{category?.name}</td>
-      <td>{category?.creationDate}</td>
+
+
+   
+      <td>{category?.creationDate?.slice(0,10)}</td>
      
       <td>
       <div className="cursorPointer">

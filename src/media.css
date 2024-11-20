@@ -21,4 +21,31 @@
     .details {
         display: block !important;
     }
+    .registerForm {
+        display: block !important;
+    }
+    .right {
+        margin-left: unset !important;
+    }
+    .left , .right {
+        width: 100% !important;
+    }
+    .registerBtn {
+        width: 75% !important;
+    }
+    .headerWrapper {
+        display: block !important;
+        margin-inline : unset !important;
+    }
+
+  }
+
+  @media only screen and (max-width: 1000px) {
+    .registerBtn {
+        width: 75% !important;
+    }
+    .btnLink {
+        display: block;
+        padding-inline: 1rem !important;
+    }
   }

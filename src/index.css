@@ -20,6 +20,7 @@
 .side-bar-container .ps-sidebar-container {
 padding: 30px 0;
 background-color: transparent;
+height: 100vh !important;
 
 }
 .side-bar-container {
@@ -29,11 +30,13 @@ background-color: transparent;
 .sideContain{
   background-color: rgba(31, 38, 62, 1);
 border-top-right-radius: 58px;
-z-index: 999;
+z-index: 999999;
 position: sticky;
 top: 0;
 left: 0;
 align-self: flex-start;
+height: 100vh !important;
+
 }
 .ps-sidebar-root {
   border-right-style: unset !important;
@@ -64,12 +67,7 @@ background-color: transparent !important;
   width: 90px !important;
 }
 
-.side {
-    position: fixed;
-    top: 0;
-    bottom: 0;
 
-}
 
 
 .ps-sidebar-root.ps-collapsed .ps-menuitem-root.myLogo {
@@ -234,4 +232,38 @@ background-color: #00000032;
   }
  .modal-header{
     border-bottom: unset !important;
+  }
+.mainBtnColor {
+  background-color: rgba(74, 163, 90, 1)
+
+}
+
+.mainBtnColor:hover {
+  background-color: rgb(51, 112, 62);
+  color: white;
+}
+
+
+.mainBtnColor:focus-visible  {
+  background-color: rgba(74, 163, 90, 1) !important;
+  color: white !important;
+}
+.mainBtnColor:active {
+  background-color: rgba(74, 163, 90, 1) !important;
+  color: white !important;
+}
+
+.mainBtnColor:disabled {
+  background-color: rgba(74, 163, 90, 1) !important;
+  color: white !important;}
+
+  .verifyForm {
+    margin-block: 2rem;
+    padding-inline: 1rem;
+  }
+
+  .navbarProfileImage {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
   }

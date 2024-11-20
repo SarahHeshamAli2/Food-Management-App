@@ -1,0 +1,117 @@
+.headerWrapper {
+    background-color: rgba(240, 255, 239, 1);
+    padding-inline: 4rem;
+    padding-block: 4.5rem;
+    border-radius: 15px;
+    margin-block: 1.3rem;
+    margin-inline: 2rem;
+
+    & .textWrapper {
+
+        max-width: 30rem;
+    }
+
+    & h3 span {
+        color: rgba(0, 146, 71, 1);
+    }
+}
+
+.BtnLink {
+    background-color: rgba(0, 146, 71, 1);
+    padding-inline: 4rem;
+    padding-block: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+}
+
+.formWrapper {
+    padding-inline:8.3rem ;
+    padding-block: 5rem;
+
+    input , select , textarea {
+        margin-bottom: 1rem;
+
+    }
+}
+
+.inputStyle {
+    background-color: rgba(247, 247, 247, 1);
+    border: unset;
+    padding-block: 1rem;
+
+    &&::placeholder {
+        color: rgba(0, 0, 0, 0.2);
+    }
+
+    
+}
+
+.price{
+    top: 25%;
+    right: 20px;
+    font-weight: 500;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  textarea {
+    resize: none;
+  }
+  .imageUpload {
+background-color: rgba(240, 255, 239, 1);
+padding-inline: 11.25rem;
+padding-block: 1rem;
+border-radius: 8px;
+border: 2px dashed rgba(0, 146, 71, 1);
+
+  }
+  .imageUpload span {
+    color: rgba(0, 146, 71, 1);
+  }
+.borderBottom {
+    border-bottom: 3px solid rgba(247, 247, 247, 1);
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+
+  .fileUpload{
+    display: none;
+
+  }
+  .customFileUpload {
+
+    cursor: pointer;
+  }
+  .cancelBtn {
+    margin-right: 3.4rem;
+    padding-block: 0.75rem;
+    padding-inline: 3.8rem;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 146, 71, 1);
+    background-color: unset;
+    color: rgba(0, 146, 71, 1);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .saveBtn {
+    background-color: rgba(0, 146, 71, 1);
+    color: white;
+    padding-block: 1rem;
+    padding-inline: 2rem;
+    border-radius: 8px;
+    border: unset;
+    font-weight: 700;
+
+  }

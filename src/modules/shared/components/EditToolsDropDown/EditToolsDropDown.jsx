@@ -1,13 +1,22 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import CategoryModal from '../CategoryModal/CategoryModal';
+import { useNavigate } from 'react-router-dom';
 ;
 
 
-export default function EditToolsDropDown({catName,categoryName,handleShowFunction,handleShow,categoryFunction,showEditCategory,setShowEditCategory,categoryId}) {
+export default function EditToolsDropDown({nav,catName,categoryName,handleShowFunction,handleShow,categoryFunction,showEditCategory,setShowEditCategory,categoryId}) {
 
     const handleCloseAddCategory = () => setShowEditCategory(false);
 
+    const navigate = useNavigate()
 
+
+    const navigateToRecipieForm = (catId,catName)=>{
+      handleShowFunction  &&   handleShowFunction(catId,catName)
+        nav ? navigate(`/recipie/${catId}`)
+         : ''
+         
+    }
  return <>
    <div className="cursorPointer">
     
@@ -20,7 +29,7 @@ export default function EditToolsDropDown({catName,categoryName,handleShowFuncti
 
       <Dropdown.Menu>
         <Dropdown.Item > <i className="fa-solid fa-eye option-icons"></i>View</Dropdown.Item>
-        <Dropdown.Item   onClick={()=>{handleShowFunction(categoryId,categoryName)}}> <i className="fa-solid fa-pen-to-square option-icons " ></i> Edit 
+        <Dropdown.Item   onClick={()=>{navigateToRecipieForm(categoryId,categoryName)}}> <i className="fa-solid fa-pen-to-square option-icons " ></i> Edit 
         <span className='sr-only'>click to edit category {categoryName}</span>
         
         </Dropdown.Item>

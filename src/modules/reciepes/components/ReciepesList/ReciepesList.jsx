@@ -14,6 +14,7 @@ import useRecipes from '../../../CustomHooks/useRecipes'
 export default function ReciepesList() {
 
   const{recipiesList,isLoading,trigger}=useRecipes()
+  
 
   const [show, setShow] = useState(false);
   const [recipieId, setRecipieId] = useState(0)
@@ -41,7 +42,7 @@ export default function ReciepesList() {
  return <>
  <Header  img={boy} title ={'Recipes'} smallTitle ={'items'} desc={'You can now add your items that any user can order it from the Application and you can edit'}/>
 
-<TableDetails btnDetails={'Add New Item'} details={'You can check all details'} caption={'Recipe Table Details'}/>
+<TableDetails nav={true} btnDetails={'Add New Item'} details={'You can check all details'} caption={'Recipe Table Details'}/>
 
 <DeleteConfirm DeletedItem={deleteSpecificRecipie} handleClose={handleClose}   show ={show} title={'Delete This Recipe  ?'}/>
 {recipiesList?.length == 0 ? <Nodata/> : <>
@@ -72,7 +73,7 @@ export default function ReciepesList() {
    
     <td>
 
-     <EditToolsDropDown handleShow={handleShow} categoryId={recipie.id} />
+     <EditToolsDropDown nav={true} handleShow={handleShow} categoryId={recipie.id} />
 
     </td>
   </tr>)

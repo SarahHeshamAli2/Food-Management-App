@@ -19,27 +19,53 @@ import { ToastContainer } from 'react-toastify'
 import ProtectedRoute from './modules/shared/components/ProtectedRoute/ProtectedRoute'
 import { useEffect, useState } from 'react'
 import { jwtDecode } from 'jwt-decode'
+import VerifyRegister from './modules/VerifyRegister/VerifyRegister'
+import { privateAxiosInstance, USERs_URLs } from './services/urls'
+import axios from 'axios'
 
 function App() { 
   const [loginData, setLoginData] = useState(null)
 
 
+  const [profileImage, setProfileImage] = useState(localStorage.getItem('userProfileImage'))
+ 
+  const getCurrentUser = async () =>{
+   await axios.get(`https://upskilling-egypt.com:3006/api/v1/Users/currentUser
+`,{
+  headers : {
+    Authorization : localStorage.getItem('token')
+  }
+}).then((res)=>{
+      console.log(res.data);
+      console.log(loginData);
+    setProfileImage(res?.data?.imagePath)
+      localStorage.setItem('userProfileImage',res.data.imagePath)
+      // localStorage.setItem('test','test')
+    }).catch((err)=>{console.log(err);
+    })
+  }
 
-  let saveLoginData = () => {
+
+
+  let saveLoginData =  async () => {
 
     let decodedData = jwtDecode(localStorage.getItem('token'))
     setLoginData(decodedData)
-    console.log(decodedData);
-    
-
+    if(loginData) {
+      localStorage.getItem('userProfileImage')
+      getCurrentUser()
+    }
   }
 
 useEffect(()=>{
 
   if(localStorage.getItem('token')) {
     saveLoginData()
+    localStorage.getItem('userProfileImage')
+
   }
-},[])
+
+},[loginData?.userEmail])
 
 
   const router = createBrowserRouter([
@@ -53,20 +79,23 @@ useEffect(()=>{
         {path : 'reset-password'  , element : <ResetPass/>},
         {path : 'Forget-password'  , element : <ForgetPass/>},
         {path : 'change-password'  , element : <ChangePass/>},
+        {path : 'verify-register'  , element : <VerifyRegister/>},
       ]
     },
 
 
 
    {
-    path : '' , element :  <ProtectedRoute ><MasterLayout loginData ={loginData}/> </ProtectedRoute>, 
+    path : '' , element :  <ProtectedRoute ><MasterLayout setLoginData={setLoginData} loginData ={loginData} profileImage={profileImage}/> </ProtectedRoute>, 
     
     errorElement : <NotFound/>,
     children : [
-      {path : 'dashboard', element: <Dashboard loginData ={loginData}/> },
+      {path : 'dashboard', element: <Dashboard loginData ={loginData} /> },
        {path : 'categories-list'  , element : <CategoriesList/>},
       { path : 'categories-data'  , element : <CategoryData/>},
       { path : 'recipies-list'  , element : <ReciepesList/>},
+      { path : 'recipie/:recipieId'  , element : <ReciepesData/>},
+      { path : 'recipie/new-recipie'  , element : <ReciepesData/>},
        {path : 'reciepies-data'  , element : <ReciepesData/>},
       { path : 'users-list'  , element : <UsersList/>},
     ]

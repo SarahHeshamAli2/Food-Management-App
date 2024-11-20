@@ -1,12 +1,15 @@
 import  { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { axiosInstance, USERs_URLs } from '../../../../services/urls';
 
 
 export default function Login({saveLoginData}) {
+
+  const location = useLocation()
+  const myLocation = location.state
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const [isVisible, setVisible] = useState(false);
@@ -22,7 +25,7 @@ export default function Login({saveLoginData}) {
     register,
     formState:{errors},
     handleSubmit
-  }=useForm()
+  }=useForm({defaultValues : {email : myLocation} , mode:'onChange'})
 
   const onSubmit = (data)=> {
     setLoading(true)
@@ -31,6 +34,7 @@ export default function Login({saveLoginData}) {
       toast.success('welcome back !')
       navigate('/dashboard')
       localStorage.setItem('token',resp.data.token)
+      
       saveLoginData()
 
 
@@ -41,14 +45,6 @@ export default function Login({saveLoginData}) {
 
   }
 
-  const toggleShowPassword = ()=> {
-    const password = document.getElementById('password')
-
-    password.type == 'password' ? password.type = 'text' : password.type = 'password';
-    
-    
-
-  }
 
 
   return <>
@@ -98,7 +94,7 @@ export default function Login({saveLoginData}) {
  <Link className='text-decoration-none text-success' to='/forget-password'>Forgot Password?</Link>
 </div>
 
-<button className='btn btn-success w-100'>{loading ? <i className='fa fa-spin fa-spinner'></i> : 'Login'}</button>
+<button  className='btn mainBtnColor text-white w-100'>{loading ? <i className='fa fa-spin fa-spinner'></i> : 'Login'}</button>
     </form>
   </div>
   
