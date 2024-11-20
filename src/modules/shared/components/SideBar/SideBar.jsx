@@ -20,7 +20,7 @@ export default function SideBar({setLoginData}) {
 
 
   const logOut = ()=>{
-    localStorage.setItem('userProfileImage',null)
+    localStorage.removeItem('userProfileImage')
     localStorage.removeItem('token')
     setLoginData(null)
     navigate('/login')

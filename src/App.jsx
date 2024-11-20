@@ -25,23 +25,26 @@ import axios from 'axios'
 
 function App() { 
   const [loginData, setLoginData] = useState(null)
+  const [isLoading, setIsLoading] = useState(null)
 
 
   const [profileImage, setProfileImage] = useState(localStorage.getItem('userProfileImage'))
  
   const getCurrentUser = async () =>{
+    setIsLoading(true)
    await axios.get(`https://upskilling-egypt.com:3006/api/v1/Users/currentUser
 `,{
   headers : {
     Authorization : localStorage.getItem('token')
   }
 }).then((res)=>{
-      console.log(res.data);
-      console.log(loginData);
     setProfileImage(res?.data?.imagePath)
       localStorage.setItem('userProfileImage',res.data.imagePath)
-      // localStorage.setItem('test','test')
+      setIsLoading(false)
+
     }).catch((err)=>{console.log(err);
+      setIsLoading(false)
+
     })
   }
 
@@ -61,9 +64,9 @@ useEffect(()=>{
 
   if(localStorage.getItem('token')) {
     saveLoginData()
-    localStorage.getItem('userProfileImage')
 
   }
+  localStorage.getItem('userProfileImage')
 
 },[loginData?.userEmail])
 
@@ -86,7 +89,7 @@ useEffect(()=>{
 
 
    {
-    path : '' , element :  <ProtectedRoute ><MasterLayout setLoginData={setLoginData} loginData ={loginData} profileImage={profileImage}/> </ProtectedRoute>, 
+    path : '' , element :  <ProtectedRoute ><MasterLayout setLoginData={setLoginData} isLoading={isLoading} loginData ={loginData} profileImage={profileImage}/> </ProtectedRoute>, 
     
     errorElement : <NotFound/>,
     children : [
