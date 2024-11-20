@@ -26,6 +26,7 @@ import axios from 'axios'
 function App() { 
   const [loginData, setLoginData] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
+  const [userRole, setUserRole] = useState(null)
 
 
   const [profileImage, setProfileImage] = useState(localStorage.getItem('userProfileImage'))
@@ -54,6 +55,8 @@ function App() {
 
     let decodedData = jwtDecode(localStorage.getItem('token'))
     setLoginData(decodedData)
+    setUserRole(loginData?.roles[0])
+    
     if(loginData) {
       localStorage.getItem('userProfileImage')
       getCurrentUser()
@@ -89,14 +92,14 @@ useEffect(()=>{
 
 
    {
-    path : '' , element :  <ProtectedRoute ><MasterLayout setLoginData={setLoginData} isLoading={isLoading} loginData ={loginData} profileImage={profileImage}/> </ProtectedRoute>, 
+    path : '' , element :  <ProtectedRoute ><MasterLayout setLoginData={setLoginData} isLoading={isLoading} userRole={userRole} loginData ={loginData} profileImage={profileImage}/> </ProtectedRoute>, 
     
     errorElement : <NotFound/>,
     children : [
       {path : 'dashboard', element: <Dashboard loginData ={loginData} /> },
        {path : 'categories-list'  , element : <CategoriesList/>},
       { path : 'categories-data'  , element : <CategoryData/>},
-      { path : 'recipies-list'  , element : <ReciepesList/>},
+      { path : 'recipies-list'  , element : <ReciepesList userRole={userRole}/>},
       { path : 'recipie/:recipieId'  , element : <ReciepesData/>},
       { path : 'recipie/new-recipie'  , element : <ReciepesData/>},
        {path : 'reciepies-data'  , element : <ReciepesData/>},

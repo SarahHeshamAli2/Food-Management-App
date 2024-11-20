@@ -11,7 +11,7 @@ import Nodata from '../../../shared/components/NoData/Nodata'
 import EditToolsDropDown from '../../../shared/components/EditToolsDropDown/EditToolsDropDown'
 import useRecipes from '../../../CustomHooks/useRecipes'
 
-export default function ReciepesList() {
+export default function ReciepesList({userRole}) {
 
   const{recipiesList,isLoading,trigger}=useRecipes()
   
@@ -42,8 +42,8 @@ export default function ReciepesList() {
  return <>
  <Header  img={boy} title ={'Recipes'} smallTitle ={'items'} desc={'You can now add your items that any user can order it from the Application and you can edit'}/>
 
-<TableDetails nav={true} btnDetails={'Add New Item'} details={'You can check all details'} caption={'Recipe Table Details'}/>
-
+{userRole != "User" ? <TableDetails nav={true} btnDetails={'Add New Item'} details={'You can check all details'} caption={'Recipe Table Details'}/>
+ :''}
 <DeleteConfirm DeletedItem={deleteSpecificRecipie} handleClose={handleClose}   show ={show} title={'Delete This Recipe  ?'}/>
 {recipiesList?.length == 0 ? <Nodata/> : <>
   {recipiesList ? <div className="table-container  table-responsive-sm ">
