@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { imageBaseURL } from "../../../../services/urls";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import nodata from '../../../../assets/images/nodata.png'
 import { toast } from "react-toastify";
 import axios from "axios";
+import { AuthContext } from "../../../../context/AuthContext/AuthContext";
 
 export default function RecipieDetail({userImg,userEmail,show,from ,setShow, handleClose ,title, recipieId,recipieImg,isLoading,recipieTag,recipieName,recipiePrice,showAddButton}) {
 
         const [isLoaded, setIsLoaded] = useState(false)
 
   
-
+    const{loginData}=useContext(AuthContext)
+    const userRole = loginData?.roles[0]
+    
     const handleAddToFavorites = async ()=>{
       
         setIsLoaded(true)
@@ -79,7 +82,7 @@ export default function RecipieDetail({userImg,userEmail,show,from ,setShow, han
   </Modal.Body>
   <Modal.Footer>
           {
-              showAddButton && from != 'userList' ?    <Button className="btn bg-transparent text-dark border-black" onClick={handleAddToFavorites}>
+              showAddButton && from != 'userList' && userRole == "User"?    <Button className="btn bg-transparent text-dark border-black" onClick={handleAddToFavorites}>
 
               {isLoaded ? <i className='fa fa-spin fa-spinner'></i> : 'add to favorites'}
             </Button> : ''

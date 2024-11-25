@@ -7,7 +7,6 @@ import { AuthContext } from "../../../../context/AuthContext/AuthContext";
 export default function FillRecipies() {
     const{loginData}=useContext(AuthContext)
     const userRole = loginData?.roles[0]
-    console.log(loginData?.roles[0]);
     
     
   return (

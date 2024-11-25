@@ -4,6 +4,7 @@ import {  useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {  privateAxiosInstance, USERs_URLs } from '../../../../services/urls';
+import axios from 'axios';
 
 
 export default function ChangePassword() {
@@ -36,7 +37,11 @@ const myLocation = location.state
   const onSubmit = (data)=> {
     setLoading(true)
     
-    privateAxiosInstance.put(USERs_URLs.CHANGE_PASSWORD,data).then((resp)=>{
+    axios.put(`https://upskilling-egypt.com:3006/api/v1/Users/ChangePassword`,data , {
+      headers : {
+        Authorization : localStorage.getItem('token')
+      }
+    }).then((resp)=>{
       setLoading(false)
       toast.success('Password has been changed!')
       navigate('/dashboard')

@@ -29,7 +29,8 @@ export default function ReciepesList() {
   
   const{numberOfPages,prevBtn,nextBtn}=useContext(PaginationContext)
   const{recipiesList,trigger,fetchFunction,currPage,setCatValue,catValue ,categoryValue,tagValue}=useRecipes()
-
+  console.log(recipiesList);
+  
   const [categoryName, setCategoryName] = useState('')
 
 
@@ -199,6 +200,8 @@ useEffect(()=>{
     {
     recipiesList?.data?.map((recipie)=>   <tr key={recipie?.id} className='tableR'>
     <td>{recipie?.name}</td>
+    {console.log(recipie?.imagePath)
+    }
     <td><img src={recipie?.imagePath  ? `${imageBaseURL}${recipie.imagePath}` : nodata}  alt={recipie.name} className=' rounded recipie-image' /></td>
     <td>{recipie?.price}  </td>
     <td>{recipie?.description?.split(' ').slice(0,6).join(' ')}</td>

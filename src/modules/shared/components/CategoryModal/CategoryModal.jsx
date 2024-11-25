@@ -26,7 +26,6 @@ const [isEmptyCategory, setIsEmptyCategory]= useState(false)
         setValue,
         trigger,
         watch,
-        getValues
       }=useForm({mode : 'onChange'})
 
       const onSubmit = (data)=> {
