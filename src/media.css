@@ -45,9 +45,39 @@
         margin: 0 !important;
         width: 15rem !important;
     }
-
+    .sideContain {
+        height: auto !important;
+        top: 50%;
+        transform: translateY(-50);
+        border-top-right-radius : unset;
+            position: fixed;
+        }
+        .formWrap {
+            padding-inline: unset !important;
+        }
+        .imgUpload {
+            padding-inline: unset !important;
+        }
+        .formImg {
+            width: 100% !important;
+            height: auto !important;
+        }
+        .fullScreenSlider {
+            display: none !important;
+        }
+        .formWrp {
+            padding-inline: unset !important;
+        }
+        .registerForm .left {
+            margin: unset !important;
+        }
   }
-
+@media only screen and (min-width : 600px) {
+    .mobile-side {
+        display: none !important;
+    }
+    
+}
   @media only screen and (max-width: 1000px) {
     .registerBtn {
         width: 75% !important;

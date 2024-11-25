@@ -138,7 +138,7 @@ export default function ReciepesData() {
       </div>
     </header>
 
-    <form  onSubmit={handleSubmit(onSubmit)} className={styles.formWrapper}>
+    <form  onSubmit={handleSubmit(onSubmit)} className={`${styles.formWrapper} formWrap`}>
        <div>
         <input placeholder='Recipe name' type="text" className={`${styles.inputStyle} form-control`}
         
@@ -226,7 +226,7 @@ export default function ReciepesData() {
 
 
 {imageFile ? <>      {imageFile && (
-  <div  className={`${styles.formImage}  position-relative`}>
+  <div  className={`${styles.formImage}  position-relative formImg`}>
     <img className='w-75' src={URL.createObjectURL(imageFile) }  
 
     />
@@ -238,7 +238,7 @@ export default function ReciepesData() {
 
     </button>
   </div>
-)} </> : <div className={`${styles.imageUpload} text-center`}>
+)} </> : <div className={`${styles.imageUpload} text-center imgUpload`}>
         
   
 <label htmlFor="file-upload" className={`${styles.customFileUpload}`}>

@@ -34,6 +34,7 @@ z-index: 999999;
 position: sticky;
 top: 0;
 left: 0;
+bottom: 0;
 align-self: flex-start;
 height: 100vh !important;
 
@@ -44,6 +45,9 @@ height: 100vh !important;
 
 .ps-menuitem-root {
     color: white !important;
+}
+.mobile-side .ps-menuitem-root {
+  color: black !important;
 }
 
 .ps-menuitem-root:not(:first-child):hover .ps-menu-button {
@@ -129,7 +133,7 @@ tbody, td, tfoot, th, thead, tr {
     display: block;
     margin:15px auto;
     position: relative;
-    color: #FFF;
+    color: green;
     box-sizing: border-box;
     animation: animloader 1s linear infinite alternate;
   }
@@ -150,7 +154,7 @@ tbody, td, tfoot, th, thead, tr {
   }
 
   .LoadingBg {
-    background-color: rgba(226, 229, 235, 1);
+    background-color: white
   }
   .icon-btn {
     border: unset;
@@ -317,3 +321,14 @@ background-color: #ffffffe3;
     padding-inline: 1rem;
     transform: translateY(-50%);
   }
+
+  .mobile-side {
+    width: 80px;
+    height: 50px;
+    border-radius: 10px;
+    position: absolute;
+    right :-25px;
+    bottom: 0;
+    transform: translateY(-50%);
+  } 
+

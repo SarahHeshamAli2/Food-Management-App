@@ -101,7 +101,7 @@ const navigate =useNavigate()
   },[watch('password')])
   return <>
 
-  <div className={styles.formWrapper} >
+  <div className={`${styles.formWrapper} formWrp`} >
   <div className={styles.formCaption} >
   <h3>Register</h3>
   <p className={styles.captionText}>Welcome Back! Please enter your details</p>

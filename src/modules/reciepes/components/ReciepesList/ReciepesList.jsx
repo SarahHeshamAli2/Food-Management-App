@@ -111,7 +111,6 @@ setNameValue(e.target.value)
 
 
   }
-
 useEffect(()=>{
 
   if(catValue.get('category')) {
@@ -121,7 +120,6 @@ useEffect(()=>{
 },[])
  return <>
  <Header  img={boy} title ={'Recipes'} smallTitle ={'items'} desc={'You can now add your items that any user can order it from the Application and you can edit'}/>
-
 <TableDetails btn={true} nav={true} btnDetails={'Add New Item'} details={'You can check all details'} caption={'Recipe Table Details'}/>
 <DeleteConfirm DeletedItem={deleteSpecificRecipie} handleClose={handleClose}   show ={show} title={'Delete This Recipe  ?'}/>
  <>
