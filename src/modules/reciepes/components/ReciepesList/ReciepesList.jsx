@@ -19,6 +19,7 @@ export default function ReciepesList() {
   
 
     const {categories}=useCategories()
+    console.log(categories);
     
     const{tagsList}=useTags()
 

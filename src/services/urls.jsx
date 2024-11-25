@@ -1,12 +1,5 @@
 import axios from "axios"
-if(localStorage.getItem('token') ) {
-    console.log('eshta');
-    
-}
-else {
-    console.log('mesh eshta');
-    
-}
+
 
 const baseURL  = 'https://upskilling-egypt.com:3006/api/v1/'
 export const imageBaseURL = 'https://upskilling-egypt.com:3006/'

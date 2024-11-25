@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CATEGORY_URLs, privateAxiosInstance } from "../../services/urls";
 import useFetch from "./useFetch";
+import axios from "axios";
 
 export default function useCategories() {
 
@@ -8,8 +9,10 @@ export default function useCategories() {
  
     
     let getCategories = async (pageNumber , pageSize )=>{ 
-    const response = await privateAxiosInstance.get(CATEGORY_URLs.HANDLE_CATEGORIES,{
-          params : {pageSize :pageSize , pageNumber :pageNumber}
+    const response = await axios.get(`https://upskilling-egypt.com:3006/api/v1/Category/`,{
+          params : {pageSize :pageSize , pageNumber :pageNumber} , headers : {
+            Authorization : localStorage.getItem('token')
+          }
         })
         setData(response?.data)
         
