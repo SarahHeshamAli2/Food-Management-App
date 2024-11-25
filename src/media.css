@@ -33,9 +33,17 @@
     .registerBtn {
         width: 75% !important;
     }
-    .headerWrapper {
+    .headerWrapper , .fill{
         display: block !important;
         margin-inline : unset !important;
+    }
+
+    .favoriteContainer  {
+        padding: 0 !important;
+    }
+    .favItem {
+        margin: 0 !important;
+        width: 15rem !important;
     }
 
   }
@@ -44,7 +52,7 @@
     .registerBtn {
         width: 75% !important;
     }
-    .btnLink {
+    .btnLink ,.fillLink {
         display: block;
         padding-inline: 1rem !important;
     }

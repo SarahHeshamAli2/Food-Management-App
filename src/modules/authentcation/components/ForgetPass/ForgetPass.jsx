@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import {  useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { axiosInstance, USERs_URLs } from '../../../../services/urls'
+import {  axiosInstance, USERs_URLs } from '../../../../services/urls'
 import { useState } from 'react'
 
 export default function ForgetPass() {
@@ -9,18 +9,15 @@ export default function ForgetPass() {
   
   let{
     register,
-    formState:{errors},
+    formState:{errors,isSubmitting},
     handleSubmit
   }=useForm()
-  const [isLoading, setIsLoading] = useState(false)
-  const onSubmit = (data)=> {
-    setIsLoading(true)
-    axiosInstance.post(USERs_URLs.FORGET_PASSWORD,data).then((resp)=>{console.log(resp)
+  // const [isLoading, setIsLoading] = useState(false)
+  const onSubmit =async (data)=> {
+    await axiosInstance.post(USERs_URLs.FORGET_PASSWORD,data).then((resp)=>{console.log(resp)
       toast.success('your request is done , please check your mail!')
       navigate('/reset-password',{state : data.email})
-      setIsLoading(false)
     }).catch((error)=>{
-      setIsLoading(false)
 
       toast.error(error.response.data.message)
     })
@@ -57,7 +54,7 @@ export default function ForgetPass() {
 
 
 
-<button disabled={isLoading} className='btn mainBtnColor text-white w-100 my-5' > { isLoading?  <i className='fa fa-spin fa-spinner'></i>: "submit"
+<button disabled={isSubmitting} className='btn mainBtnColor text-white w-100 my-5' > { isSubmitting?  <i className='fa fa-spin fa-spinner'></i>: "submit"
 
 } </button>
    </form>

@@ -1,16 +1,16 @@
-import  { useState } from 'react'
+import  { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../../../../context/AuthContext/AuthContext';
 import { axiosInstance, USERs_URLs } from '../../../../services/urls';
 
 
-export default function Login({saveLoginData}) {
-
+export default function Login() {
+    const {saveLoginData} = useContext(AuthContext)
   const location = useLocation()
   const myLocation = location.state
-  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const [isVisible, setVisible] = useState(false);
   const [isPasswordShown, setIsPasswordShown] = useState(false)
@@ -23,14 +23,12 @@ export default function Login({saveLoginData}) {
   };
   let{
     register,
-    formState:{errors},
+    formState:{errors,isSubmitting},
     handleSubmit
   }=useForm({defaultValues : {email : myLocation} , mode:'onChange'})
 
-  const onSubmit = (data)=> {
-    setLoading(true)
-    axiosInstance.post(USERs_URLs.USER_LOGIN,data).then((resp)=>{console.log(resp)
-      setLoading(false)
+  const onSubmit = async(data)=> {
+   await axiosInstance.post(USERs_URLs.USER_LOGIN,data).then((resp)=>{
       toast.success('welcome back !')
       navigate('/dashboard')
       localStorage.setItem('token',resp.data.token)
@@ -39,8 +37,7 @@ export default function Login({saveLoginData}) {
 
 
     }).catch((error)=>{
-      toast.error(error.response.data.message)
-      setLoading(false)
+      toast.error(error?.response?.data.message)
     })
 
   }
@@ -94,7 +91,7 @@ export default function Login({saveLoginData}) {
  <Link className='text-decoration-none text-success' to='/forget-password'>Forgot Password?</Link>
 </div>
 
-<button  className='btn mainBtnColor text-white w-100'>{loading ? <i className='fa fa-spin fa-spinner'></i> : 'Login'}</button>
+<button disabled={isSubmitting}  className='btn mainBtnColor text-white w-100'>{isSubmitting ? <i className='fa fa-spin fa-spinner'></i> : 'Login'}</button>
     </form>
   </div>
   

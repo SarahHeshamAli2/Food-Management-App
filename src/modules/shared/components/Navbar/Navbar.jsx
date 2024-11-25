@@ -1,9 +1,10 @@
 import { imageBaseURL } from '../../../../services/urls';
 import logo from '../../../../assets/images/aazen4lhc.webp'
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
-export default function Navbar({loginData,profileImage,isLoading}) {
-console.log();
-
+import { useContext } from 'react';
+import { AuthContext } from '../../../../context/AuthContext/AuthContext';
+export default function Navbar() {
+const {   loginData , profileImage
+} = useContext(AuthContext)
 
 
   

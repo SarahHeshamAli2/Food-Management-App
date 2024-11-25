@@ -267,3 +267,53 @@ background-color: #00000032;
     height: 3rem;
     border-radius: 50%;
   }
+  .recipieDetailsImg {
+    width: 12rem;
+    height: 12rem;
+  }
+  .page-link {
+    cursor: pointer;
+  }
+  .page-link:focus-visible {
+    background-color: red !important;
+  }
+  .page-link:focus {
+    background-color: red !important;
+  }
+
+  .fill {
+    background-color: rgba(240, 255, 239, 1);
+    padding-block: 2.6rem;
+    padding-inline: 4rem;
+    border-radius: 15px;
+
+    & span {
+      color: rgba(0, 146, 71, 1);
+    }
+
+    & p {
+      max-width: 30rem;
+
+    }
+  }
+
+  .fillLink {
+    background-color: rgba(0, 146, 71, 1);
+    padding-inline: 4rem;
+    padding-block: 0.75rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+  }
+
+  .offline ,.online {
+    position: fixed;
+    top: 50%;
+    z-index: 99999999999;
+    width: 20rem;
+background-color: #ffffffe3;
+    padding-block: 3rem;
+    padding-inline: 1rem;
+    transform: translateY(-50%);
+  }

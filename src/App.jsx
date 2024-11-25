@@ -1,5 +1,6 @@
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { Offline } from "react-detect-offline";
 import './App.css'
 import Login from './modules/authentcation/components/Login/Login'
 import Register from './modules/authentcation/components/Registration/Register'
@@ -17,61 +18,22 @@ import Dashboard from './modules/dashboard/components/Dashboard/Dashboard'
 import MasterLayout from './modules/shared/components/MasterLayout/MasterLayout'
 import { ToastContainer } from 'react-toastify'
 import ProtectedRoute from './modules/shared/components/ProtectedRoute/ProtectedRoute'
-import { useEffect, useState } from 'react'
-import { jwtDecode } from 'jwt-decode'
 import VerifyRegister from './modules/VerifyRegister/VerifyRegister'
-import { privateAxiosInstance, USERs_URLs } from './services/urls'
-import axios from 'axios'
+import FavoriteList from './modules/FavoriteList/components/FavoriteList'
+import {  useEffect } from 'react'
+import UserProtectedRoute from './modules/shared/components/UserProtectedRoute/UserProtectedRoute'
+import AdminProtectedRoute from './modules/shared/components/AdminProtectedRoute/AdminProtectedRoute'
+
 
 function App() { 
-  const [loginData, setLoginData] = useState(null)
-  const [isLoading, setIsLoading] = useState(null)
-  const [userRole, setUserRole] = useState(null)
 
 
-  const [profileImage, setProfileImage] = useState(localStorage.getItem('userProfileImage'))
  
-  const getCurrentUser = async () =>{
-    setIsLoading(true)
-   await axios.get(`https://upskilling-egypt.com:3006/api/v1/Users/currentUser
-`,{
-  headers : {
-    Authorization : localStorage.getItem('token')
-  }
-}).then((res)=>{
-    setProfileImage(res?.data?.imagePath)
-      localStorage.setItem('userProfileImage',res.data.imagePath)
-      setIsLoading(false)
 
-    }).catch((err)=>{console.log(err);
-      setIsLoading(false)
-
-    })
-  }
-
-
-
-  let saveLoginData =  async () => {
-
-    let decodedData = jwtDecode(localStorage.getItem('token'))
-    setLoginData(decodedData)
-    setUserRole(loginData?.roles[0])
-    
-    if(loginData) {
-      localStorage.getItem('userProfileImage')
-      getCurrentUser()
-    }
-  }
 
 useEffect(()=>{
 
-  if(localStorage.getItem('token')) {
-    saveLoginData()
-
-  }
-  localStorage.getItem('userProfileImage')
-
-},[loginData?.userEmail])
+},[])
 
 
   const router = createBrowserRouter([
@@ -79,8 +41,8 @@ useEffect(()=>{
     {path : '' , element : <AuthLayout/> ,
       errorElement : <NotFound/>,
       children : [ 
-        {path : 'login'  , element : <Login saveLoginData = {saveLoginData}/>},
-        {index:true , element : <Login saveLoginData = {saveLoginData}/>},
+        {path : 'login'  , element : <Login/>},
+        {index:true , element : <Login/>},
         {path : 'register'  , element : <Register/>},
         {path : 'reset-password'  , element : <ResetPass/>},
         {path : 'Forget-password'  , element : <ForgetPass/>},
@@ -92,18 +54,19 @@ useEffect(()=>{
 
 
    {
-    path : '' , element :  <ProtectedRoute ><MasterLayout setLoginData={setLoginData} isLoading={isLoading} userRole={userRole} loginData ={loginData} profileImage={profileImage}/> </ProtectedRoute>, 
+    path : '' , element :  <ProtectedRoute ><MasterLayout  /> </ProtectedRoute>, 
     
     errorElement : <NotFound/>,
     children : [
-      {path : 'dashboard', element: <Dashboard loginData ={loginData} /> },
-       {path : 'categories-list'  , element : <CategoriesList/>},
-      { path : 'categories-data'  , element : <CategoryData/>},
-      { path : 'recipies-list'  , element : <ReciepesList userRole={userRole}/>},
-      { path : 'recipie/:recipieId'  , element : <ReciepesData/>},
-      { path : 'recipie/new-recipie'  , element : <ReciepesData/>},
+      {path : 'dashboard', element: <Dashboard  /> },
+       {path : 'categories-list'  , element : <AdminProtectedRoute><CategoriesList/></AdminProtectedRoute>},
+      { path : 'categories-data'  , element : <AdminProtectedRoute><CategoryData/></AdminProtectedRoute>},
+      { path : 'recipies-list'  , element : <ReciepesList />},
+      { path : 'recipie/:recipieId'  , element :<AdminProtectedRoute> <ReciepesData/></AdminProtectedRoute>},
+      { path : 'recipie/new-recipie'  , element : <AdminProtectedRoute><ReciepesData/></AdminProtectedRoute>},
        {path : 'reciepies-data'  , element : <ReciepesData/>},
-      { path : 'users-list'  , element : <UsersList/>},
+      { path : 'users-list'  , element : <AdminProtectedRoute><UsersList/></AdminProtectedRoute>},
+      { path : 'user-favorites'  , element : <UserProtectedRoute><FavoriteList/></UserProtectedRoute>},
     ]
    },
    
@@ -116,7 +79,16 @@ useEffect(()=>{
   return  <>
   <ToastContainer 
   autoClose={3000}/>
-  <RouterProvider router={router}/>
+    <Offline>
+
+      <div className='offline text-center'>
+      <i className="fa-solid fa-plug-circle-xmark fa-4x text-danger"></i>      
+        <p className='fs-3'> you're now offline , please check your internet connection
+        </p>
+      </div>
+    </Offline>
+
+    <RouterProvider router={router}/>
   </>
 
   

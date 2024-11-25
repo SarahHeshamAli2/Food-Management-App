@@ -3,8 +3,7 @@ import logo from"../../../../assets/images/4 4.svg"
 
 export default function AuthLayout() {
   const location = useLocation()
-  console.log(location.pathname);
-  //"col-md-5 bg-white rounded-2 px-5 py-4"
+
   
   return<>
   <div className='auth-container '>

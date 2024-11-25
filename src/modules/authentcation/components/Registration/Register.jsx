@@ -12,6 +12,16 @@ export default function Register() {
   const [isRePasswordVisibile, setIsRePasswordVisibile] = useState(false);
   const [imageFile, setImageFile] = useState();
 
+  useEffect(()=>{
+
+    const beforeUnloadHandler = (e) => {
+      e.preventDefault()
+    }
+    
+    window.addEventListener('beforeunload',beforeUnloadHandler) 
+    return ()=> window.removeEventListener('beforeunload',beforeUnloadHandler)
+    })
+    
   const uploadImage = (selectorFiles) => {
     if (selectorFiles) {
       setImageFile(selectorFiles[0]);
@@ -54,11 +64,9 @@ const navigate =useNavigate()
     formData.append('confirmPassword',data.confirmPassword)
     formData.append('email',data.email)
     formData.append('profileImage',data?.profileImage)
-    console.log(data.profileImage.name);
     
       setIsLoading(true)
       axiosInstance.post(USERs_URLs.REGISTER_USER,formData).then((response)=>{
-        console.log(response);
         setIsLoading(false)
         toast.success(response?.data?.message)
         navigate('/verify-register',{state:data.email})
@@ -100,10 +108,11 @@ const navigate =useNavigate()
   </div>
   <form onSubmit={handleSubmit(onSubmit)}>
 
-<div className={styles.registerForm+" d-flex justify-content-between registerForm" }>
+<div className={styles.registerForm+"  registerForm" }>
 
- <div className={`left mx-2 w-100`}>
-    
+ <div className={`left mx-2 w-100 row`}>
+  <div className="col-md-6">
+        
 <div className={`${styles.inputGroup} input-group`}>
 <span className="input-group-text border-0" id="basic-addon1">
 <i className="fa-solid fa-mobile-screen-button"></i>
@@ -124,6 +133,30 @@ const navigate =useNavigate()
 {errors.userName && <span className='text-danger'>{errors.userName.message}</span>}
 
 </div>
+  </div>
+
+  <div className="col-md-6">
+  <div className={`${styles.inputGroup} input-group`}>
+<span className="input-group-text border-0" id="basic-addon1">
+<i className="fa-solid fa-mobile-screen-button"></i>
+</span>
+<input type="email" className="form-control input-bg" placeholder="Enter your E-mail" aria-label="email" aria-describedby="basic-addon1"
+  {...register('email',{
+    required : 'email cannot be empty',
+    pattern : {
+      value : /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+      message : 'please enter a valid email'
+    }
+  })}
+/>
+
+</div>
+<div className={styles.errorMessage}>
+{errors.email && <span className='text-danger'>{errors.email.message}</span>}
+
+</div>
+  </div>
+<div className="col-md-6">
 <div className={`${styles.inputGroup} input-group`}>
 <span className="input-group-text border-0 " id="basic-addon1">
 <i className="fa-solid fa-lock"></i> 
@@ -137,6 +170,31 @@ const navigate =useNavigate()
 {errors.country && <span className='text-danger'>{errors.country.message}</span>}
 
 </div>
+</div>
+
+<div className="col-md-6">
+<div className={`${styles.inputGroup} input-group`}>
+<span className="input-group-text border-0" id="basic-addon1">
+<i className="fa-solid fa-mobile-screen-button"></i>
+</span>
+<input type="tel" className="form-control input-bg" placeholder="Phone Number" aria-label="phone number" aria-describedby="basic-addon1"
+{...register('phoneNumber' , {required : 'please enter your phone number' , pattern : {
+  value:/^01[0125][0-9]{8}$/,
+  message : 'please enter valid egyptian number'
+}})}
+/>
+
+</div>
+<div className={styles.errorMessage}>
+{errors.phoneNumber && <span className='text-danger'>{errors.phoneNumber.message}</span>}
+
+</div>
+</div>
+
+
+
+
+<div className="col-md-6">
 <div className={`${styles.inputGroup} input-group position-relative`}>
 <span className="input-group-text  border-0" id="basic-addon1">
 <i className="fa-solid fa-lock"></i> 
@@ -160,45 +218,9 @@ const navigate =useNavigate()
 {errors.password && <span className='text-danger'>{errors.password.message}</span>}
 
 </div>
-
-</div> 
-<div className={styles.rightInputs +" right w-100"}>
- <div className={`${styles.inputGroup} input-group`}>
-<span className="input-group-text border-0" id="basic-addon1">
-<i className="fa-solid fa-mobile-screen-button"></i>
-</span>
-<input type="email" className="form-control input-bg" placeholder="Enter your E-mail" aria-label="email" aria-describedby="basic-addon1"
-  {...register('email',{
-    required : 'email cannot be empty',
-    pattern : {
-      value : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-      message : 'please enter a valid email'
-    }
-  })}
-/>
-
-</div>
-<div className={styles.errorMessage}>
-{errors.email && <span className='text-danger'>{errors.email.message}</span>}
-
-</div>
-<div className={`${styles.inputGroup} input-group`}>
-<span className="input-group-text border-0" id="basic-addon1">
-<i className="fa-solid fa-mobile-screen-button"></i>
-</span>
-<input type="tel" className="form-control input-bg" placeholder="Phone Number" aria-label="phone number" aria-describedby="basic-addon1"
-{...register('phoneNumber' , {required : 'please enter your phone number' , pattern : {
-  value:/^01[0125][0-9]{8}$/,
-  message : 'please enter valid egyptian number'
-}})}
-/>
-
-</div>
-<div className={styles.errorMessage}>
-{errors.phoneNumber && <span className='text-danger'>{errors.phoneNumber.message}</span>}
-
 </div>
 
+<div className="col-md-6">
 <div className={`${styles.inputGroup} input-group position-relative`}>
   <span className="input-group-text border-0 " id="basic-addon1">
   <i className="fa-solid fa-lock"></i> 
@@ -220,36 +242,26 @@ const navigate =useNavigate()
 {errors.confirmPassword && <span className='text-danger'>{errors.confirmPassword.message}</span>}
 
 </div> 
+</div>
+
+</div> 
+<div className={styles.rightInputs +" right w-100"}>
+
+
+
+
 
 
 
   <div className="d-flex align-items-center ">
- <div className="profileImageField mx-2">
- <label htmlFor="file-upload" className={`${styles.customFileUpload}`}>
-          
-          <p className='border p-2'>Upload profile picture</p>
-
-                </label>
-      <input  
-    
-      {...register('profileImage')}
-      className={styles.fileUpload} id="file-upload" type="file" onChange={(e) => uploadImage(e.target.files)
-      
-    
-    
-    }
-    
-    
-    />
- </div>
 
 
-{imageFile && (
-  <div className='position-relative'>
-    <img src={URL.createObjectURL(imageFile)} className={styles.formImage} 
+    {imageFile ? <>{imageFile && (
+  <div  className={`${styles.formImage}  position-relative`}>
+    <img className='w-75' src={URL.createObjectURL(imageFile) }  
 
     />
-    <button className='position-absolute btn' 
+    <button className={`${styles.discardBtn} btn`}
     
     onClick={discardProfileImage}>
     <i className="fa-solid fa-xmark "></i>
@@ -257,7 +269,33 @@ const navigate =useNavigate()
 
     </button>
   </div>
-)}
+)}</> :  <div className="profileImageField mx-2">
+<label htmlFor="file-upload" className={`${styles.customFileUpload}`}>
+<div className={styles.cameraIcon}>
+<i className="fa-solid fa-camera fa-2x"></i>
+
+</div>
+
+ <p className={styles.photoText}>Add profile picture</p>
+
+
+               </label>
+     <input  
+   
+     {...register('profileImage')}
+     className={styles.fileUpload} id="file-upload" type="file" onChange={(e) => uploadImage(e.target.files)
+     
+   
+   
+   }
+   
+   
+   />
+</div>}
+
+
+
+
   </div>
 
 

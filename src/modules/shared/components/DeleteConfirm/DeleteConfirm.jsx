@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import deleteConfirm from '../../../../assets/images/deleteConfirm.svg';
 
-export default function DeleteConfirm({show,handleClose,title,DeletedItem}) {
+export default function DeleteConfirm({show,handleClose,title,DeletedItem,isLoading}) {
 
 
 
@@ -24,7 +24,9 @@ export default function DeleteConfirm({show,handleClose,title,DeletedItem}) {
         <Modal.Footer>
      
           <Button className='modalBtnDanger' variant="danger" onClick={DeletedItem}>
-           Delete this item
+
+            {isLoading ? <i className='fa fa-spin fa-spinner'></i> : 'Delete this item'}
+          
           </Button>
         </Modal.Footer>
       </Modal>

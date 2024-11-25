@@ -33,9 +33,8 @@ const myLocation = location.state
 
   const onSubmit = (data)=> {
     setLoading(true)
-    console.log(data);
     
-    axiosInstance.post(USERs_URLs.RESET_PASSWORD,data).then((resp)=>{console.log(resp)
+    axiosInstance.post(USERs_URLs.RESET_PASSWORD,data).then((resp)=>{
       setLoading(false)
       toast.success('Password has been updated!')
       navigate('/login')

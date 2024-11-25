@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import {useContext, useState } from 'react'
 import Header from './../../../shared/components/Header/Header';
 import boy from '../../../../assets/images/boy.svg'
 import TableDetails from './../../../shared/components/TableDetails/TableDetails';
@@ -10,25 +10,26 @@ import Nodata from '../../../shared/components/NoData/Nodata';
 
 import EditToolsDropDown from '../../../shared/components/EditToolsDropDown/EditToolsDropDown';
 import useCategories from '../../../CustomHooks/useCategories';
+import { PaginationContext } from '../../../../context/PaginationContext';
+import axios from 'axios';
+
 
 
 
 export default function CategoriesList() {
 
-  const {categories,trigger} = useCategories()
-  console.log(categories);
+  const {categories,trigger,fetchFunction,currPage} = useCategories()
 
-  
 
-  // const [categories, setCategories] = useState(null)
   const [categoryId, setCategoryId] = useState(0)
   const [showAddCategory, setShowAddCategory] = useState(false);
   const [showEditCategory, setShowEditCategory] = useState(false);
   const [categoryName, setCategoryName] = useState('');
-  const [timeFormat, setTimeFormat] = useState('');
+  
+const{numberOfPages,prevBtn,nextBtn}=useContext(PaginationContext)
   
 
-  
+
 
   function handleShowAddCategory() {
     setShowAddCategory(true)
@@ -45,13 +46,22 @@ export default function CategoriesList() {
     
   }
 
+  const [numberOfCurrentPage,setNumberOfCurrentPage]= useState(0)
 
 
 let editCategory = (data)=>{
 
 
 
-  privateAxiosInstance.put(CATEGORY_URLs.ToGGLE_CATEGORY(categoryId),data).then((resp)=>{console.log(resp)
+  axios.put(`https://upskilling-egypt.com:3006/api/v1/Category/${categoryId}`    ,data, {
+    headers:{
+      Authorization:localStorage.getItem('token')
+    }
+  })
+  
+  
+  
+  .then((resp)=>{
     toast.success('item edited succussefully')
     trigger()
     setShow(false)
@@ -65,7 +75,7 @@ let editCategory = (data)=>{
 
 let deleteSpecificCategory = () =>{
   
-privateAxiosInstance.delete(CATEGORY_URLs.ToGGLE_CATEGORY(categoryId)).then((resp)=>{console.log(resp)
+privateAxiosInstance.delete(CATEGORY_URLs.ToGGLE_CATEGORY(categoryId)).then((resp)=>{
   toast.success('item deleted succussefully')
   trigger()
     setShow(false)
@@ -78,7 +88,7 @@ privateAxiosInstance.delete(CATEGORY_URLs.ToGGLE_CATEGORY(categoryId)).then((res
 
 
 let addNewCategory = (data)=>{
-  privateAxiosInstance.post(CATEGORY_URLs.HANDLE_CATEGORIES,data).then((response)=>{console.log(response);
+  privateAxiosInstance.post(CATEGORY_URLs.HANDLE_CATEGORIES,data).then((response)=>{
     trigger()
       toast.success('category added successfully')
   }).catch((error)=>{console.log(error)
@@ -104,10 +114,10 @@ function handleShow(id) {
 
 <Header img={boy} title ={'Categories'} smallTitle ={'item'} desc={'You can now add your items that any user can order it from the Application and you can edit'}/>
 {
-  categories?.data?.data? <div className="categories-wrapper">
+  categories? <div className="categories-wrapper">
 
   <DeleteConfirm DeletedItem={deleteSpecificCategory} show ={show} handleClose={handleClose} title={'Delete This Category ?'}/>
-  <TableDetails setShowAddCategory={setShowAddCategory} showAddCategory={showAddCategory} handleShowFunction={handleShowAddCategory}  categoryFunction={addNewCategory}  buttonInfo ={'save'} btnDetails={'Add New Category'} details={'You can check all details'} caption={'Categories Table Details'}/>
+  <TableDetails btn={true} setShowAddCategory={setShowAddCategory} showAddCategory={showAddCategory} handleShowFunction={handleShowAddCategory}  categoryFunction={addNewCategory}  buttonInfo ={'save'} btnDetails={'Add New Category'} details={'You can check all details'} caption={'Categories Table Details'}/>
   
    <> <div className="table-container table-responsive">
   
@@ -121,7 +131,7 @@ function handleShow(id) {
       </thead>
       <tbody>
      {
-      categories?.data?.data?.map((category)=>   <tr key={category?.id} className='tableR'>
+      categories?.data?.map((category)=>   <tr key={category?.id} className='tableR'>
       <td>{category?.name}</td>
 
 
@@ -135,14 +145,39 @@ function handleShow(id) {
   
   
     </div>
-   <EditToolsDropDown catName={categoryName}  categoryName={category.name} categoryFunction={editCategory} setShowEditCategory={setShowEditCategory} handleShow={handleShow} showEditCategory={showEditCategory} handleShowFunction={handleShowEditCategory}   addNewCategoryFunction = {addNewCategory} buttonInfo ={'save'} btnDetails={'Add New Category'} details={'You can check all details'} caption={'Categories Table Details'} categoryId={category.id}/>
+   <EditToolsDropDown showA={false} catName={categoryName}  categoryName={category.name} categoryFunction={editCategory} setShowEditCategory={setShowEditCategory} handleShow={handleShow} showEditCategory={showEditCategory} handleShowFunction={handleShowEditCategory}   addNewCategoryFunction = {addNewCategory} buttonInfo ={'save'} btnDetails={'Add New Category'} details={'You can check all details'} caption={'Categories Table Details'} categoryId={category.id}/>
       </td>
     </tr>)
      }
     
-    
       </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+  <ul className="pagination">
+    <li className="page-item">
+      <a className="page-link" onClick={(e)=>prevBtn(fetchFunction,currPage,setNumberOfCurrentPage,e)} aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+
+    {numberOfPages?.map((numberOfPage)=>     
+    <li  key={numberOfPage}  onClick={(e)=> fetchFunction(numberOfPage,9,setNumberOfCurrentPage(e.target.innerText) , localStorage.setItem('categoryCurrentPage' , numberOfPage)
+    )}   className="page-item">
+      
+      <a  className={`page-link ${numberOfPage == numberOfCurrentPage || currPage == numberOfPage? "active"   :  ''}`} >{numberOfPage}  </a>
+     
+      </li>
+
+   
+)}
+
+    <li className="page-item">
+      <a  className="page-link"     onClick={(e)=>nextBtn(currPage,numberOfPages,fetchFunction,setNumberOfCurrentPage,e)}   aria-label="Next" >
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
     </div></> 
   
   

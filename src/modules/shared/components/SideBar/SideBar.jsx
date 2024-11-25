@@ -1,10 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import logo from '../../../../assets/images/3.svg'
 import {  NavLink, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../../context/AuthContext/AuthContext';
 
 
-export default function SideBar({setLoginData,userRole}) {
+export default function SideBar() {
+
+  const {  setLoginData,loginData
+  } = useContext(AuthContext)
+  const userRole = loginData?.roles[0]
   const navigate = useNavigate()
   useEffect(()=>{
     localStorage.getItem('sidebar') ?    setIsCollapsed(JSON.parse(localStorage.getItem('sidebar'))) : setIsCollapsed(false)
@@ -43,14 +48,18 @@ return <>
 {
   userRole !='User' ?  <>    <MenuItem icon={<i className="fa-solid fa-users"></i>} component={<NavLink to='/users-list'/>}> Users <span className='sr-only'>navigate to user list</span></MenuItem>
   <MenuItem icon={<i className="fa-solid fa-utensils"></i>} component={<NavLink to='/recipies-list'/>}> Recipes  <span className='sr-only'>navigate to recipies list</span></MenuItem>
-  <MenuItem icon = {<i className="fa-solid fa-list"></i>} component={<NavLink to='/categories-list'/>}> Categories <span className='sr-only'>navigate to categories list</span></MenuItem>
-  <MenuItem icon={<i className="fa-solid fa-lock"></i>} component={<NavLink to='/change-password'/>}> Change Password <span className='sr-only'>navigate to change password</span> </MenuItem></> : <>
-  
+  <MenuItem icon = {<i className="fa-solid fa-list"></i>} component={<NavLink to='/categories-list'/>}> Categories <span className='sr-only'>navigate to categories list</span></MenuItem> </> : <>
   <MenuItem icon={<i className="fa-solid fa-utensils"></i>} component={<NavLink to='/recipies-list'/>}> Recipes  <span className='sr-only'>navigate to recipies list</span></MenuItem>
-
+  <MenuItem icon={<i className="fa-regular fa-heart"></i>} component={<NavLink to='/user-favorites'/>}> Favorites <span className='sr-only'>navigate to change password</span> </MenuItem>
   </>
+
+ 
+  
+
 }
-    
+
+<MenuItem icon={<i className="fa-solid fa-lock"></i>} component={<NavLink to='/change-password'/>}> Change Password <span className='sr-only'>navigate to change password</span> </MenuItem>
+
 
     <MenuItem onClick={logOut} icon={<i className="fa-solid fa-right-from-bracket"></i>}> Logout <span className='sr-only'>navigate to logout</span></MenuItem>
     </div>
