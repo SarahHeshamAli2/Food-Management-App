@@ -258,7 +258,7 @@ const navigate =useNavigate()
 
     {imageFile ? <>{imageFile && (
   <div  className={`${styles.formImage}  position-relative`}>
-    <img className='w-75' src={URL.createObjectURL(imageFile) }  
+    <img className='w-75' alt='user profile' src={URL.createObjectURL(imageFile) }  
 
     />
     <button className={`${styles.discardBtn} btn`}

@@ -227,7 +227,7 @@ export default function ReciepesData() {
 
 {imageFile ? <>      {imageFile && (
   <div  className={`${styles.formImage}  position-relative formImg`}>
-    <img className='w-75' src={URL.createObjectURL(imageFile) }  
+    <img alt='user profile' className='w-75' src={URL.createObjectURL(imageFile) }  
 
     />
     <button onClick={discardProfileImage} className={`${styles.discardBtn} btn`}
